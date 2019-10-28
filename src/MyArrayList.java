@@ -1,7 +1,5 @@
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class MyArrayList<T> implements List {
     private T[] elementT;
@@ -18,6 +16,21 @@ public class MyArrayList<T> implements List {
             elementT = (T[])(new Object[value]);
         } else {elementT = (T[])(new Object[DEFAULT_SIZE]);
         }
+    }
+
+    public void printList(){
+        int i=0;
+        while (i<this.elementT.length){
+            System.out.println(i+"-ый элемент = "+ this.elementT[i++]);
+        }
+    }
+
+    private void newArray (){
+        delta = (T[]) (new Object[this.elementT.length + DEFAULT_SIZE]);
+        for (int i = 0; i < this.elementT.length; i++) {
+            delta[i] = elementT[i];
+        }
+        this.elementT = delta;
     }
 
     @Override
@@ -38,21 +51,51 @@ public class MyArrayList<T> implements List {
     }
 
     @Override
+    public boolean add(Object o) {
+        if ((this.allSize+1) > this.elementT.length) {
+            newArray();
+        }
+        this.elementT[this.allSize++] = (T) o;
+        return true;
+    }
+    @Override
     public void add(int index, Object element) {
-        if (index >= this.elementT.length) {
-            delta = (T[]) (new Object[this.elementT.length + DEFAULT_SIZE]);
-            for (int i = 0; i < this.elementT.length; i++) {
-                delta[i] = elementT[i];
-//                System.out.println("element: "+this.elementT[i]);
-//                System.out.println("delta: "+this.delta[i]);
+        while (index >= this.elementT.length) {
+            newArray();
+        }
+        if ((this.allSize+1) > this.elementT.length) {
+            newArray();
+        }
+        if (get(index) != null){
+            for (int i=this.allSize; i>index; i--){
+                this.elementT[i]=this.elementT[i-1];
             }
-            this.elementT = delta;
         }
         this.elementT[index] = (T) element;
         ++this.allSize;
- //       System.out.println("length: "+this.elementT.length);
+        //       System.out.println("length: "+this.elementT.length);
+    }
+    @Override
+    public boolean addAll(Collection c) {
+        int size = this.allSize;
+        for (Object element: c) {
+            add(element);
+        }
+        if (this.allSize > size){
+            return true;
+        } else return false;
     }
 
+    @Override
+    public boolean addAll(int index, Collection c) {
+        int size = this.allSize;
+        for (Object element: c) {
+            add(index++,element);
+        }
+        if (this.allSize>size){
+            return true;
+        } else return false;
+    }
     @Override
     public boolean isEmpty() {
         return false;
@@ -70,36 +113,28 @@ public class MyArrayList<T> implements List {
 
     @Override
     public Object[] toArray() {
-        int i=0;
         int l=this.size();
-        T newArray[];
-        if (l>0) {
-
+        Object[] newArray = new Object[l];//new Array[l];
+        for (int i=0; i<l;i++) {
+            newArray[i] = this.get(i);
         }
-        return new Object[0];
+        // return new Object[l];
+        return newArray;
     }
     @Override
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        int l=a.length;
+        Object[] newArray = new Object[l];//new Array[l];
+        for (int i=0; i<l;i++) {
+            newArray[i] = a[i];
+        }
+        // return new Object[l];
+        return newArray;
     }
 
-    @Override
-    public boolean add(Object o) {
-        return false;
-    }
 
     @Override
     public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection c) {
         return false;
     }
 
@@ -152,5 +187,4 @@ public class MyArrayList<T> implements List {
     public boolean containsAll(Collection c) {
         return false;
     }
-
 }
