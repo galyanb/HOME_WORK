@@ -170,6 +170,13 @@ public class MyArrayList<T> implements List {
 
     @Override
     public List subList(int fromIndex, int toIndex) {
+        if (toIndex<= this.elementT.length) {
+            List subList = new MyArrayList(toIndex - fromIndex + 1);
+            for (int i = 0; i<=(toIndex - fromIndex); i++){
+                subList.add(i,this.elementT[fromIndex+i]);
+            }
+            return subList;
+        }
         return null;
     }
 
@@ -186,5 +193,9 @@ public class MyArrayList<T> implements List {
     @Override
     public boolean containsAll(Collection c) {
         return false;
+    }
+
+    static <T> void sort(List<T> list, Comparator<? super T> c) {
+        List
     }
 }
