@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class MyArrayList<T> implements List {
@@ -46,7 +45,7 @@ public class MyArrayList<T> implements List {
     }
     @Override
     public T set(int index, Object element) {
-        // this.elementT[index]= (T)element;
+        this.elementT[index]= (T)element;
         return null;
     }
 
@@ -78,8 +77,9 @@ public class MyArrayList<T> implements List {
     @Override
     public boolean addAll(Collection c) {
         int size = this.allSize;
-        for (Object element: c) {
-            add(element);
+        Object[] element = c.toArray();
+        for (int i=0; i<element.length;i++){
+            add(element[i]);
         }
         if (this.allSize > size){
             return true;
@@ -89,8 +89,9 @@ public class MyArrayList<T> implements List {
     @Override
     public boolean addAll(int index, Collection c) {
         int size = this.allSize;
-        for (Object element: c) {
-            add(index++,element);
+        Object[] element = c.toArray();
+        for (int i=0; i<element.length;i++){
+            add(index+i,element[i]);
         }
         if (this.allSize>size){
             return true;
@@ -98,27 +99,40 @@ public class MyArrayList<T> implements List {
     }
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.allSize>0;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return this.indexOf(o)>-1;
     }
 
     @Override
     public Iterator iterator() {
+       Iterator<T> it = new Iterator() {
+           @Override
+           public boolean hasNext() {
+               return false;
+           }
+
+           @Override
+           public Object next() {
+               Object object= this.
+               return this != null;
+           }
+       };
+       // for ()
         return null;
     }
 
     @Override
     public Object[] toArray() {
         int l=this.size();
+    //    System.out.println("l collection="+l);
         Object[] newArray = new Object[l];//new Array[l];
         for (int i=0; i<l;i++) {
             newArray[i] = this.get(i);
         }
-        // return new Object[l];
         return newArray;
     }
     @Override
@@ -128,7 +142,6 @@ public class MyArrayList<T> implements List {
         for (int i=0; i<l;i++) {
             newArray[i] = a[i];
         }
-        // return new Object[l];
         return newArray;
     }
 
@@ -150,12 +163,34 @@ public class MyArrayList<T> implements List {
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        int index= -1;
+        int i =0;
+        while ((index ==-1)&&(i< this.elementT.length)) {
+             if(this.elementT[i]!=null){
+                    if (this.elementT[i]==(T)o) {
+                        index = i;
+                    }
+            }
+            i++;
+        }
+        return index;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        int i = indexOf(o);
+        int index = i;
+        if (index >-1){
+        while (i< this.elementT.length) {
+            if(this.elementT[i]!=null){
+                if (this.elementT[i]==(T)o) {
+                    index = i;
+                }
+            }
+            i++;
+        }
+        }
+        return index;
     }
 
     @Override
@@ -192,10 +227,22 @@ public class MyArrayList<T> implements List {
 
     @Override
     public boolean containsAll(Collection c) {
-        return false;
+        Object[] element = c.toArray();
+        boolean bool = false;
+        int i=0;
+        while ((i<element.length) && (bool=this.contains(element[i]))){
+            i++;
+        }
+        return bool;
     }
 
     static <T> void sort(List<T> list, Comparator<? super T> c) {
-        List
+        Collections.sort(list, new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                return 0;
+            }
+        });
+
     }
 }
