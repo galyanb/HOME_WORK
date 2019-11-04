@@ -109,20 +109,20 @@ public class MyArrayList<T> implements List {
 
     @Override
     public Iterator iterator() {
-       Iterator<T> it = new Iterator() {
+        Object[] obj = this.toArray();
+       Iterator<T> it = new Iterator<T>() {
+           int count=-1;
            @Override
            public boolean hasNext() {
-               return false;
+              return (obj[count+1] != null);
            }
 
            @Override
            public Object next() {
-               Object object= this.
-               return this != null;
+               return obj[++count];
            }
        };
-       // for ()
-        return null;
+       return it;
     }
 
     @Override
