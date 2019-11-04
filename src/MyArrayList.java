@@ -110,7 +110,7 @@ public class MyArrayList<T> implements List {
     @Override
     public Iterator iterator() {
         Object[] obj = this.toArray();
-       Iterator<T> it = new Iterator<T>() {
+       Iterator it = new Iterator() {
            int count=-1;
            @Override
            public boolean hasNext() {
@@ -236,13 +236,17 @@ public class MyArrayList<T> implements List {
         return bool;
     }
 
-    static <T> void sort(List<T> list, Comparator<? super T> c) {
-        Collections.sort(list, new Comparator<T>() {
-            @Override
-            public int compare(T o1, T o2) {
-                return 0;
-            }
-        });
-
-    }
+//    static <T> void sort(List<T> list, Comparator<? super T> c) {
+//        Collections.sort(list, new Comparator<T>() {
+//            @Override
+//            public int compare(T o1, T o2) {
+//                int rez;
+//                if (o1.equals(o2)) {return 0;}
+//                else {
+//                    if (o1<o2) return 1;}
+//                return -1;
+//            }
+//        });
+//
+//    }
 }

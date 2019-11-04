@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +14,7 @@ public class Starter {
         myList.add(2);
         myList.add(3);
 //        myList.printList();
-        myList.add(0,3);
+        myList.add(0,4);
         myList.printList();
         rez=myList.indexOf(3);
         System.out.println(myList1.containsAll(myList));
@@ -29,5 +28,12 @@ public class Starter {
         myList1.addAll(0,myList);
         myList1.printList();
         System.out.println(myList1.containsAll(myList));
+        Collections.sort(myList1, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        myList1.printList();
     }
 }
