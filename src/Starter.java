@@ -7,6 +7,7 @@ public class Starter {
     public static void main(String[] args) {
         MyArrayList<Integer> myList = new MyArrayList<>(5);
         MyArrayList<Integer> myList1 = new MyArrayList<>(10);
+        MyArrayList<Integer> myList2 = new MyArrayList<>(10);
         int rez;
         // System.out.println(myList.size());
         myList.add(0);
@@ -27,7 +28,7 @@ public class Starter {
        // myList.printList();
         myList1.addAll(0,myList);
         myList1.printList();
-        System.out.println(myList1.containsAll(myList));
+        System.out.println("sort");
         Collections.sort(myList1, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {

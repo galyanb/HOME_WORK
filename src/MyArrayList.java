@@ -195,7 +195,62 @@ public class MyArrayList<T> implements List {
 
     @Override
     public ListIterator listIterator() {
-        return null;
+        Object[] obj = this.toArray();
+        ListIterator listIt = new ListIterator() {
+            int count=-1;
+            @Override
+            public boolean hasNext() {
+                return (obj[count+1] != null);
+            }
+
+            @Override
+            public Object next() {
+                return obj[++count];
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return (obj[count-1] != null);
+            }
+
+            @Override
+            public Object previous() {
+                return obj[--count];
+            }
+
+            @Override
+            public int nextIndex() {
+                if (hasPrevious()) {
+                return count+1;
+                } else return obj.length;
+            }
+
+            @Override
+            public int previousIndex() {
+                if (hasPrevious()) {
+                return (count-1);}
+                else return -1;
+            }
+
+            @Override
+            public void remove() {
+               obj[count]=null;
+            }
+
+            @Override
+            public void set(Object o) {
+               obj[count] = o;
+            }
+
+            @Override
+            public void add(Object o) {
+                for(int i=obj.length; i>count;i--){
+                    obj[i]= obj[i-1];
+                }
+                obj[count] = o;
+            }
+        };
+        return listIt;
     }
 
     @Override
@@ -248,5 +303,15 @@ public class MyArrayList<T> implements List {
 //            }
 //        });
 //
-//    }
-}
+//        default void sort(Comparator<? super T> c) {
+//            Object[] a = this.toArray();
+//            Arrays.sort(a, (Comparator) c);
+//            ListIterator<T> i = this.listIterator();
+//            for (Object e : a) {
+//                i.next();
+//                i.set((T) e);
+//            }
+//        }
+
+    }
+
